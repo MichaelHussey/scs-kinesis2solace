@@ -1,0 +1,47 @@
+spring:
+  cloud:
+    stream:
+      solace:
+        binder:
+          # IP Address and port number for SMF connection to the router. 
+          # Default port for VMR and appliance is 55555
+          smfHost: localhost:55555
+          # Which message VPN to use. VMR is configured OOTB with a VPN called "default"
+          msgVpn: default
+          # Which identity to use. VMR is configured OOTB with a username called "default"
+          username: default
+          # Password for the identity. VMR is configured OOTB with no password for the username called "default" 
+          password: default
+      bindings:
+        input:
+          group: input
+          binder: kinesis1
+          destination: hello
+        output:
+          group: output
+          binder: solace1
+          destination: test/echo
+      binders:
+        solace1:
+          defaultCandidate: false
+          type: solace
+        kinesis1:
+          defaultCandidate: false
+          type: kinesis
+          
+cloud:
+  aws:
+    region:
+      static: eu-west-1
+    credentials:
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
+      instanceProfile: true
+
+logging:
+  level:
+    com.solacesystems.spring_cloud_stream: DEBUG
+    com.amazonaws: WARN
+    org.springframework.cloud.stream.*: WARN
+
+    

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.solace.spring-cloud-stream</groupId>
+		<artifactId>spring-cloud-stream-binder-solace-parent</artifactId>
+		<version>0.1</version>
+		<relativePath>../spring-cloud-stream-binder-solace/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>kinesis2solace</artifactId>
+	<name>kinesis2solace</name>
+	<description>Using Spring Cloud Stream Binders for Solace messaging and AWS Kinesis together</description>
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<!-- Spring Cloud Solace Binder -->
+		<dependency>
+			<groupId>com.solace.spring-cloud-stream</groupId>
+			<artifactId>spring-cloud-stream-binder-solace</artifactId>
+			<version>0.1</version>
+		</dependency>
+
+		<!-- Spring Cloud AWS Kinesis Binder -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-binder-kinesis</artifactId>
+			<version>1.0.0.BUILD-SNAPSHOT</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/junit/junit -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- Not relevant to my application by needed by Spring Web handling -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.databind.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<version>${springframework.boot.version}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<!-- This dependency ensures that when the app comes up it doesn't shut 
+				down immediately -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud-dependencies.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<plugins>
+			<!-- Generate a fat jar that can be run on the command line -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>
